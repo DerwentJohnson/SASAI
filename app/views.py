@@ -6,8 +6,12 @@ This file creates your application.
 """
 
 from app import app, db, login_manager
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, make_response, jsonify
 from flask_login import login_user, logout_user, current_user, login_required
+import dialogflow
+import requests
+import json
+import os
 from app.forms import LoginForm
 from app.models import UserProfile
 
@@ -15,27 +19,48 @@ from app.models import UserProfile
 ###
 # Routing for your application.
 ###
+# @app.route('https://api.dialogflow.com/v1/query?v=20150910',method=['POST'])
+# def userQuery():
+
+def detect_intent_texts(project_id, session_id, text, language_code):
+    session_client = dialogflow.SessionsClient()
+    session = session_client.session_path(project_id, session_id)
+    if text:
+        text_input = dialogflow.types.TextInput(text=text, language_code=language_code)
+        query_input = dialogflow.types.Query_Input(text=text_input)
+        response = session_client.detect_intent(session=session, query_input=query_input)
+        return response.query_result.fullfillment_text
+
+@app.route('/send_message', method=['POST'])
+def send_message():
+    message = request.form['message']
+    project_id = os.getenv('DIALOGFLOW_PROJECT_ID')
+    fullfillment_text = detect_intent_texts(project_id, "unique", message, 'en')
+    response_text = {"message": fullfillment_text}
+    return jsonify(response_text)
 
 @app.route('/webhook',methods=['POST'])
 def webhook():
-    if request.method == 'POST':
-        req = request.get_json(silent=True, force=True)
-        res = processRequest(req)
+    data = request.get_json(silent=True)
+    
+    if data["queryResult"]["intent"]["displayName"] == "DeanSearch":
+        reply = {"fulfillmentText":"Dean Search detected"}
+        return jsonify(reply)
 
-    #     res = json.dumps(res, indent = 4)
-    #     r = makeresponse(res)
-    #     r.headers['Content-Type'] = 'application/json'
-    # return r
 
-def processRequest(req):
-    query_response = req["queryResult"]
-    print(query_response)
-    text =query_response.get('queryText', None)
-    parameters = query_response.get('parameters', None)
-    print(parameters)
-    # res = get_data()
+#     if request.method == 'POST':
+#         req = request.get_json(silent=True, force=True)
+#         req_params = processRequest(req)
+#         return make_response(jsonify(results(req_params)))
 
-    return parameters
+# def processRequest(req):
+#     query_response = req["queryResult"]
+#     print(query_response)
+#     text =query_response.get('queryText', None)
+#     parameters = query_response.get('intent', None)
+#     print(parameters)
+#     return parameters
+
 
 @app.route('/about/')
 def about():
@@ -43,27 +68,26 @@ def about():
     return render_template('about.html')
 
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    form = LoginForm()
-    if request.method == "POST":
-        # change this to actually validate the entire form submission
-        # and not just one field
-        if form.username.data:
-            # Get the username and password values from the form.
+# @app.route("/login", methods=["GET", "POST"])
+# def login():
+#     form = LoginForm()
+#     if request.method=='POST' and form.validate_on_submit():
+#         userid=form.userid.data
+#         password=form.password.data
+#         user = Student.query.filter_by(student_id = userid)
 
-            # using your model, query database for a user based on the username
-            # and password submitted. Remember you need to compare the password hash.
-            # You will need to import the appropriate function to do so.
-            # Then store the result of that query to a `user` variable so it can be
-            # passed to the login_user() method below.
+#         if user is not None and check_password_hash(user.password, password):
+#             # get user id, load into session
+#             # print(user.joined_on.strftime())
+#             payload = {
+#                 'sub': user.id,
+#                 'username': user.username
+#             }
+#             login_user(user)
 
-            # get user id, load into session
-            login_user(user)
-
-            # remember to flash a message to the user
-            return redirect(url_for("home"))  # they should be redirected to a secure-page route instead
-    return render_template("login.html", form=form)
+#             # remember to flash a message to the user
+#             return redirect(url_for("home"))  # they should be redirected to a secure-page route instead
+#     return render_template("login.html", form=form)
 
 
 # user_loader callback. This callback is used to reload the user object from
