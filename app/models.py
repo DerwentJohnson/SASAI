@@ -1,7 +1,7 @@
 from . import db
 
 
-class UserProfile(db.Model):
+class Student(db.Model):
     # You can use this to change the table name. The default convention is to use
     # the class name. In this case a class name of UserProfile would create a
     # user_profile (singular) table, but if we specify __tablename__ we can change it
@@ -9,9 +9,7 @@ class UserProfile(db.Model):
     __tablename__ = 'user_profiles'
 
     id = db.Column(db.String(9), primary_key=True)
-    first_name = db.Column(db.String(80))
-    last_name = db.Column(db.String(80))
-    username = db.Column(db.String(80), unique=True)
+    password = db.Column(db.String(255), nullable=False)
 
     def is_authenticated(self):
         return True

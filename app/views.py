@@ -12,40 +12,50 @@ import dialogflow
 import requests
 import json
 import os
-from app.forms import LoginForm
-from app.models import UserProfile
+# from app.forms import LoginForm
+# from app.models import UserProfile
+from app.resDict import resultDict
 
 
 ###
 # Routing for your application.
 ###
-# @app.route('https://api.dialogflow.com/v1/query?v=20150910',method=['POST'])
-# def userQuery():
 
-def detect_intent_texts(project_id, session_id, text, language_code):
-    session_client = dialogflow.SessionsClient()
-    session = session_client.session_path(project_id, session_id)
-    if text:
-        text_input = dialogflow.types.TextInput(text=text, language_code=language_code)
-        query_input = dialogflow.types.Query_Input(text=text_input)
-        response = session_client.detect_intent(session=session, query_input=query_input)
-        return response.query_result.fullfillment_text
+def getResponse(intent,params):
+    if intent in resultDict.dispatcher:
+        return resultDict.dispatcher[intent](params)
+    else:
+        return "I'm sorry, I could not find an adequet response for your question"
+    
 
-@app.route('/send_message', method=['POST'])
-def send_message():
-    message = request.form['message']
-    project_id = os.getenv('DIALOGFLOW_PROJECT_ID')
-    fullfillment_text = detect_intent_texts(project_id, "unique", message, 'en')
-    response_text = {"message": fullfillment_text}
-    return jsonify(response_text)
+
+# def detect_intent_texts(project_id, session_id, text, language_code):
+#     session_client = dialogflow.SessionsClient()
+#     session = session_client.session_path(project_id, session_id)
+#     if text:
+#         text_input = dialogflow.types.TextInput(text=text, language_code=language_code)
+#         query_input = dialogflow.types.Query_Input(text=text_input)
+#         response = session_client.detect_intent(session=session, query_input=query_input)
+#         return response.query_result.fullfillment_text
+
+# @app.route('/send_message', method=['POST'])
+# def send_message():
+#     message = request.form['message']
+#     project_id = os.getenv('DIALOGFLOW_PROJECT_ID')
+#     fullfillment_text = detect_intent_texts(project_id, "unique", message, 'en')
+#     response_text = {"message": fullfillment_text}
+#     return jsonify(response_text)
 
 @app.route('/webhook',methods=['POST'])
 def webhook():
     data = request.get_json(silent=True)
-    
-    if data["queryResult"]["intent"]["displayName"] == "DeanSearch":
-        reply = {"fulfillmentText":"Dean Search detected"}
-        return jsonify(reply)
+    intent = data["queryResult"]["intent"]["displayName"]
+    parameters = data["queryResult"]["parameters"]
+    response = getResponse(intent,parameters)
+    # if data["queryResult"]["intent"]["displayName"] == "DeanSearch":
+    print(response)
+    reply = {"fulfillmentText":response}
+    return jsonify(reply)
 
 
 #     if request.method == 'POST':
@@ -68,26 +78,27 @@ def about():
     return render_template('about.html')
 
 
-# @app.route("/login", methods=["GET", "POST"])
-# def login():
-#     form = LoginForm()
-#     if request.method=='POST' and form.validate_on_submit():
-#         userid=form.userid.data
-#         password=form.password.data
-#         user = Student.query.filter_by(student_id = userid)
+@app.route("/api/auth/login", methods=["GET", "POST"])
+def login():
+    form = LoginForm()
+    if request.method=='POST' and form.validate_on_submit():
+        userid=form.userid.data
+        password=form.password.data
+        user = Student.query.filter_by(student_id = userid)
 
-#         if user is not None and check_password_hash(user.password, password):
-#             # get user id, load into session
-#             # print(user.joined_on.strftime())
-#             payload = {
-#                 'sub': user.id,
-#                 'username': user.username
-#             }
-#             login_user(user)
+        if user is not None and check_password_hash(user.password, password):
+            # get user id, load into session
+            # print(user.joined_on.strftime())
+            payload = {
+                'sub': user.id,
+                'username': user.username
+            }
+            #generate jwt token
+            token = jwt.encode(payload, app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+            #login_user(user)
+            return make_response(jsonify({'id': user.id, 'token': token, 'message': 'User successfully logged in.'}), 200)
 
-#             # remember to flash a message to the user
-#             return redirect(url_for("home"))  # they should be redirected to a secure-page route instead
-#     return render_template("login.html", form=form)
+    return make_response(jsonify(error=form_errors(form)),400)
 
 
 # user_loader callback. This callback is used to reload the user object from
