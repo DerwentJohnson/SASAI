@@ -12,7 +12,7 @@ import dialogflow
 import requests
 import json
 import os
-# from app.forms import LoginForm
+from app.forms import LoginForm
 # from app.models import UserProfile
 from app.resDict import resultDict
 
@@ -78,7 +78,7 @@ def about():
     return render_template('about.html')
 
 
-@app.route("/api/auth/login", methods=["GET", "POST"])
+@app.route("/login-page", methods=["GET", "POST"])
 def login():
     form = LoginForm()
     if request.method=='POST' and form.validate_on_submit():
@@ -96,9 +96,10 @@ def login():
             #generate jwt token
             token = jwt.encode(payload, app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
             #login_user(user)
-            return make_response(jsonify({'id': user.id, 'token': token, 'message': 'User successfully logged in.'}), 200)
+            # return make_response(jsonify({'id': user.id, 'token': token, 'message': 'User successfully logged in.'}), 200)
+            return redirect(url_for("chatbot"))  
 
-    return make_response(jsonify(error=form_errors(form)),400)
+    return render_template("login-page.html", form=form)
 
 
 # user_loader callback. This callback is used to reload the user object from
