@@ -25,7 +25,7 @@ def getResponse(intent,params):
     if intent in resultDict.dispatcher:
         return resultDict.dispatcher[intent](params)
     else:
-        return "I'm sorry, I could not find an adequet response for your question"
+        return "I'm sorry, I could not find an adequate response for your question"
     
 
 
@@ -77,6 +77,15 @@ def about():
     """Render the website's about page."""
     return render_template('about.html')
 
+@app.route('/home-page/')
+def home_page():
+    """Render the website's home page."""
+    return render_template('home-page.html')
+
+# @app.route('/chatbot/')
+# def chatbot():
+#     """Render the website's chatbot page."""
+#     return render_template('chatbot.html')
 
 @app.route("/login-page", methods=["GET", "POST"])
 def login():
