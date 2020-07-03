@@ -16,3 +16,5 @@ venv/
 .env
 
 aib-dptxgi-c2646d9afc91.json
+
+db.yaml

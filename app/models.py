@@ -2,11 +2,8 @@ from . import db
 
 
 class Student(db.Model):
-    # You can use this to change the table name. The default convention is to use
-    # the class name. In this case a class name of UserProfile would create a
-    # user_profile (singular) table, but if we specify __tablename__ we can change it
-    # to `user_profiles` (plural) or some other name.
-    __tablename__ = 'user_profiles'
+
+    __tablename__ = 'student'
 
     id = db.Column(db.String(9), primary_key=True)
     password = db.Column(db.String(255), nullable=False)
@@ -26,5 +23,7 @@ class Student(db.Model):
     #     except NameError:
     #         return str(self.id)  # python 3 support
 
+
+
     def __repr__(self):
-        return '<User %r>' % (self.username)
+        return '<User %r>' % (self.userid)

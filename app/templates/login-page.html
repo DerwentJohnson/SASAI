@@ -48,17 +48,16 @@
                         <!-- CARD BODY -->
                         <div class="body border-top border-bottom px-2 py-0">
                             <img src="../img/b5.jpg" alt="" style="height:200px;width:250;" class="d-block mx-auto">
-                            <form action="" class="px-3">
+                            <form action="{{url_for('login')}}" method="post" class="px-3">
                                 <!-- EMAIL -->
-                                <div class="fieldset">
-                                    <label for="email">Email</label>
-                                    <input type="email" class="form-control form-control-md text-gray"
-                                        placeHolder="eg. jogndoe@gmail.com">
+                                <div class="fieldset form-group">
+                                   {{form.userid.label}}
+                                   {{form.userid(class= 'form-control', placeholder="Enter your student ID")}}
                                 </div>
                                 <!-- PASSWORD -->
-                                <div class="fieldset my-3">
-                                    <label for="pwd">Password</label>
-                                    <input type="text" class="form-control form-control-md">
+                                <div class="fieldset my-3 form-group">
+                                    {{ form.password.label }}
+                                    {{ form.password(class='form-control') }}
                                 </div>
                                 <!-- <button class="text-center">Submit</button> -->
                                 <input type="submit" value="Submit"

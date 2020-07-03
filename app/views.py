@@ -5,7 +5,7 @@ Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 This file creates your application.
 """
 
-from app import app, db, login_manager
+from app import app, db
 from flask import render_template, request, make_response, jsonify
 from flask_login import login_user, logout_user, current_user, login_required
 import dialogflow
@@ -90,8 +90,7 @@ def login():
             # get user id, load into session
             # print(user.joined_on.strftime())
             payload = {
-                'sub': user.id,
-                'username': user.username
+                'sub': userid,
             }
             #generate jwt token
             token = jwt.encode(payload, app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
@@ -104,9 +103,9 @@ def login():
 
 # user_loader callback. This callback is used to reload the user object from
 # the user ID stored in the session
-@login_manager.user_loader
-def load_user(id):
-    return UserProfile.query.get(int(id))
+# @login_manager.user_loader
+# def load_user(id):
+#     return UserProfile.query.get(int(id))
 
 ###
 # The functions below should be applicable to all Flask apps.
