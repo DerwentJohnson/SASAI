@@ -9,6 +9,7 @@ from app import app, db
 from flask import render_template, request, make_response, jsonify
 from flask_login import login_user, logout_user, current_user, login_required
 import dialogflow
+# from dialogflow_v2.types import TextInput, QueryInput
 import requests
 import json
 import os
@@ -29,22 +30,23 @@ def getResponse(intent,params):
     
 
 
-# def detect_intent_texts(project_id, session_id, text, language_code):
-#     session_client = dialogflow.SessionsClient()
-#     session = session_client.session_path(project_id, session_id)
-#     if text:
-#         text_input = dialogflow.types.TextInput(text=text, language_code=language_code)
-#         query_input = dialogflow.types.Query_Input(text=text_input)
-#         response = session_client.detect_intent(session=session, query_input=query_input)
-#         return response.query_result.fullfillment_text
+def detect_intent_texts(project_id, session_id, text, language_code):
+    session_client = dialogflow.SessionsClient()
+    session = session_client.session_path(project_id, session_id)
+    if text:
+        text_input = dialogflow.types.TextInput(text=text, language_code=language_code)
+        query_input = dialogflow.types.QueryInput(text=text_input)
+        response = session_client.detect_intent(session=session, query_input=query_input)
+        return response.query_result.fulfillment_text
 
-# @app.route('/send_message', method=['POST'])
-# def send_message():
-#     message = request.form['message']
-#     project_id = os.getenv('DIALOGFLOW_PROJECT_ID')
-#     fullfillment_text = detect_intent_texts(project_id, "unique", message, 'en')
-#     response_text = {"message": fullfillment_text}
-#     return jsonify(response_text)
+@app.route('/send_message', methods=['POST'])
+def send_message():
+    message = request.form['message']
+    project_id = os.getenv('DIALOGFLOW_PROJECT_ID')
+    fullfillment_text = detect_intent_texts(project_id, "unique", message, 'en')
+    response_text = {"message": fullfillment_text}
+    return jsonify(response_text)
+
 
 @app.route('/webhook',methods=['POST'])
 def webhook():
@@ -52,40 +54,16 @@ def webhook():
     intent = data["queryResult"]["intent"]["displayName"]
     parameters = data["queryResult"]["parameters"]
     response = getResponse(intent,parameters)
-    # if data["queryResult"]["intent"]["displayName"] == "DeanSearch":
-    print(response)
     reply = {"fulfillmentText":response}
     return jsonify(reply)
 
 
-#     if request.method == 'POST':
-#         req = request.get_json(silent=True, force=True)
-#         req_params = processRequest(req)
-#         return make_response(jsonify(results(req_params)))
 
-# def processRequest(req):
-#     query_response = req["queryResult"]
-#     print(query_response)
-#     text =query_response.get('queryText', None)
-#     parameters = query_response.get('intent', None)
-#     print(parameters)
-#     return parameters
+@app.route('/chat')
+def chat():
+    """Render the website's chat page."""
+    return render_template('chatbot.html')
 
-
-@app.route('/about/')
-def about():
-    """Render the website's about page."""
-    return render_template('about.html')
-
-@app.route('/home-page/')
-def home_page():
-    """Render the website's home page."""
-    return render_template('home-page.html')
-
-# @app.route('/chatbot/')
-# def chatbot():
-#     """Render the website's chatbot page."""
-#     return render_template('chatbot.html')
 
 @app.route("/login-page", methods=["GET", "POST"])
 def login():
@@ -109,16 +87,6 @@ def login():
 
     return render_template("login-page.html", form=form)
 
-
-# user_loader callback. This callback is used to reload the user object from
-# the user ID stored in the session
-# @login_manager.user_loader
-# def load_user(id):
-#     return UserProfile.query.get(int(id))
-
-###
-# The functions below should be applicable to all Flask apps.
-###
 
 
 @app.route('/<file_name>.txt')
