@@ -4,7 +4,7 @@ create database sasai;
 
 use sasai;
 
-Create table Student(student_id char(11), student_firstname varchar(30), student_lastname varchar(30), primary key(student_id));
+Create table Student(student_id char(11), student_firstname varchar(30), student_lastname varchar(30), `password` varchar(256), primary key(student_id));
 
 Create table Faculty_Info (faculty_id char(5), faculty_name varchar(75),title enum('Prof','Dr','Mrs','Mr'), dean_firstname varchar(30), dean_lastname varchar(30), primary key(faculty_id));
 
@@ -34,8 +34,8 @@ create table studentcourses(student_id char(11), course_code char(8),Status enum
  create table faculty_departments(faculty_id char(5), department_id char(4), primary key(faculty_id,department_id)
  , foreign key(faculty_id) references faculty_info(faculty_id), foreign key(department_id) references department_info(department_id));
  
- create table department_lecturers(department_id char(4), lecturer_id char(10), HOD boolean, primary key(department_info,lecturer_id),
- foreign key(department_id) references department_info(department_id), foreign key(lecturer_id) references lecturer(lecturer_id));
+ create table department_lecturers(department_id char(4), lecturer_id char(10), HOD boolean, primary key(department_id,lecturer_id),
+ foreign key(department_id) references Department_info(department_id), foreign key(lecturer_id) references lecturer(lecturer_id));
  
  create table teaches(lecturer_id char(10), course_code char(8), primary key(lecturer_id,course_code),
  foreign key(lecturer_id) references lecturer(lecturer_id), foreign key(course_code) references course(course_code));

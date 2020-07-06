@@ -6,15 +6,13 @@ This file creates your application.
 """
 
 from app import app, db
-from flask import render_template, request, make_response, jsonify
-from flask_login import login_user, logout_user, current_user, login_required
+from flask import render_template, request, make_response, jsonify,session
 import dialogflow
-# from dialogflow_v2.types import TextInput, QueryInput
 import requests
 import json
 import os
+import bcrypt
 from app.forms import LoginForm
-# from app.models import UserProfile
 from app.resDict import resultDict
 
 
@@ -24,6 +22,7 @@ from app.resDict import resultDict
 
 def getResponse(intent,params):
     if intent in resultDict.dispatcher:
+        print(params)
         return resultDict.dispatcher[intent](params)
     else:
         return "I'm sorry, I could not find an adequate response for your question"
@@ -53,6 +52,7 @@ def webhook():
     data = request.get_json(silent=True)
     intent = data["queryResult"]["intent"]["displayName"]
     parameters = data["queryResult"]["parameters"]
+    print(intent,parameters)
     response = getResponse(intent,parameters)
     reply = {"fulfillmentText":response}
     return jsonify(reply)
@@ -68,23 +68,26 @@ def chat():
 @app.route("/login-page", methods=["GET", "POST"])
 def login():
     form = LoginForm()
-    if request.method=='POST' and form.validate_on_submit():
-        userid=form.userid.data
-        password=form.password.data
-        user = Student.query.filter_by(student_id = userid)
+    if request.method=='POST':
+        userid= request.form['userid']
+        password= request.form['password']
+        
 
-        if user is not None and check_password_hash(user.password, password):
-            # get user id, load into session
-            # print(user.joined_on.strftime())
-            payload = {
-                'sub': userid,
-            }
-            #generate jwt token
-            token = jwt.encode(payload, app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
-            #login_user(user)
-            # return make_response(jsonify({'id': user.id, 'token': token, 'message': 'User successfully logged in.'}), 200)
-            return redirect(url_for("chatbot"))  
+        cur = db.connection.cursor()
+        cur.execute('SELECT * from student where student_id = %s',[userid])
+        user = cur.fetchone()
+        cur.close()
 
+        if len(user) > 0 :
+            
+            if user[3] == password:
+                print(user[1])
+            # if bcrypt.hashpw(password, user['password'].encode('utf-8')) == user['password'].encode('utf-8'):
+                session['username'] = user[1] + user[2]
+                session['userid'] = user[0]
+                return render_template('chatbot.html')
+        else:
+            return "ID or password incorrect"
     return render_template("login-page.html", form=form)
 
 

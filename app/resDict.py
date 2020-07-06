@@ -14,11 +14,32 @@ class resultDict():
 
         if queryresponse > 0:
             queryDetails = cur.fetchone()
-            
+            cur.close()
             return "The current dean of the faculty of "+faculty+" "+queryDetails[0]+" "+queryDetails[1]
 
     def credit_check(studentID):
-        cur = db.connection
-        credit = cur.execute()
+        cur = db.connection.cursor()
+        credit = cur.execute("student_credits(620088317)")
+        if credit > 0:
+            queryDetails = cur.fetchone()
+            return "You currently have "+ queryDetails+" credits."
+        return "I'm sorry, I could not access this information."
 
-    dispatcher = {'DeanSearch': deansearch}
+    def credits_for_degree(params):
+        return"OK"
+
+    def getHOD(params):
+        cur = db.connection.cursor()
+        query = cur.execute()
+        if query > 0:
+            queryDetails = cur.fetchone()
+            return queryDetails
+
+    def getLecturer(params):
+        cur = db.connection.cursor()
+        query = cur.execute()
+        if query > 0:
+            queryDetails = cur.fetchone()
+            return queryDetails
+
+    dispatcher = {'DeanSearch': deansearch,'CreditsRequiredDegree':credits_for_degree,'CreditCheck':credit_check,'HOD':getHOD,'Lecturer':getLecturer}
