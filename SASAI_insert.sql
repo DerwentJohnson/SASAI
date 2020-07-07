@@ -1,4 +1,6 @@
-insert into Student(student_id,student_firstname,student_lastname,`password`) values ('620088317','Derwent','Johnson','password');
+insert into Student(student_id,student_firstname,student_lastname,`password`) values 
+('620088317','Derwent','Johnson','password'),
+('620111723','Nicholas','McKenzie','something');
 
 insert into Faculty_Info (faculty_id, faculty_name,title, dean_firstname, dean_lastname) values 
 ('00001','Science and Technology','Prof','Michael','Taylor'), 
@@ -23,7 +25,8 @@ insert into Course(course_code, course_name, number_of_credits, level) values
 ('COMP3101','Operating Systems',3,3),
 ('COMP3220','Introduction to Artificial Intelligence',3,3),
 ('COMP3161','Database Management Systems',3,3),
-('COMP3901','Group Project',3,3);
+('COMP3901','Group Project',3,3),
+('CHEM1901','Introductory Chemistry A',3,1);
 
 insert into Department_info(Department_id, Dept_name, dept_office_num, dept_email) values 
 ('COMP','Computing','876-702-4455','computing@uwimona.edu.jm'),
@@ -34,7 +37,9 @@ insert into Department_info(Department_id, Dept_name, dept_office_num, dept_emai
 ('BIOL','Life Sciences','876-927-1202','lifesci@uwimona.edu.jm');
 
 insert into Degree_info(degree_id, degree_name, degree_type, elective_credits,incourse_credits, foundation_credits, level_1_credits, advanced_credits, total_credits) 
-values ('00012','Computer Science','BSc',21,45,15,30,30,90);
+values 
+('00012','Computer Science','BSc',21,45,15,30,30,90),
+('00013'; 'Biochemistry','BSc',0,0,0,22,32,54);
 
 insert into Lecturer(lecturer_id, lecturer_name) values
 ('00021','Dr. Gunjun Mansingh'),
@@ -62,11 +67,17 @@ insert into Faculty_phone_num(faculty_id, phone_number) values
 ('00006','876-927-0221'),
 ('00007','876-702-4473');
 
-insert into Student_email(student_id, email) values ('620088317','kingderwent@gmail.com');
+insert into Student_email(student_id, email) values 
+('620088317','kingderwent@gmail.com'),
+('620111723','ncamckenzie@gmail.com');
 
-insert into studentcourses(student_id, course_code,Status, grade) values ('620088317','COMP1126','Complete','B+');
+insert into studentcourses(student_id, course_code,Status, grade) values 
+('620088317','COMP1126','Complete','B+'),
+('620111723','COMP1127','Complete','A-');
 
-insert into registered_faculty(student_id, faculty_id) values ('620088317','00001');
+insert into registered_faculty(student_id, faculty_id) values 
+('620088317','00001'),
+('620111723','00006');
 
 insert into faculty_departments(faculty_id, department_id) values ('00001','COMP'),
 ('00001','GEOG'),
@@ -83,7 +94,9 @@ insert into department_lecturers(department_id, lecturer_id, HOD) values
 ('CHEM','00025','Dr. Roy Porter'),
 ('BIOL','00026','Dr. Dwight Robinson');
 
-insert into teaches(lecturer_id, course_code) values ('00021','COMP1126');
+insert into teaches(lecturer_id, course_code) values 
+('00021','COMP1126'),
+('00025','CHEM1901');
 
 insert into degree_courses(degree_id, course_code) values ('00012','COMP1126');
 
