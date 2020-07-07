@@ -47,7 +47,13 @@ insert into Lecturer(lecturer_id, lecturer_name) values
 ('00023','Dr. Nagarani Ponakala'),
 ('00024','Dr. Tannecia Stephenson'),
 ('00025','Dr. Roy Porter'),
-('00026','Dr. Dwight Robinson');
+('00026','Dr. Dwight Robinson'),
+('00027','Dr. Carl Beckford');
+('00028','Dr. Michael Burn');
+('00029','Dr. Samuel McDaniel');
+('00030','Phylicia Ricketts'),
+('00031','Dr. Donna Minott Kates'),
+('00032','Dr. Jane Cohen');
 
 insert into Faculty_email(faculty_id, email) values 
 ('00001','scitech@uwimona.edu.jm'),
@@ -87,17 +93,26 @@ insert into faculty_departments(faculty_id, department_id) values ('00001','COMP
 ('00001','BIOL');
 
 insert into department_lecturers(department_id, lecturer_id, HOD) values 
-('COMP','00021','Dr.Gunjun Mansingh'),
-('GEOG','00022','Dr. Donovan Campbell'),
-('MATH','00023','Dr. Nagarani Ponakala'),
-('PHYS','00024','Dr. Tannecia Stephenson'),
-('CHEM','00025','Dr. Roy Porter'),
-('BIOL','00026','Dr. Dwight Robinson');
+('COMP','00021','True'),
+('GEOG','00022','True'),
+('MATH','00023','True'),
+('PHYS','00024','True'),
+('CHEM','00025','True'),
+('BIOL','00026','True'),
+('COMP','00027','False'),
+('GEOG','00028','False'),
+('MATH','00029','False'),
+('PHYS','00030','False'),
+('CHEM','00031','False'),
+('BIOL','00032','False');
 
 insert into teaches(lecturer_id, course_code) values 
 ('00021','COMP1126'),
-('00025','CHEM1901');
+('00025','CHEM1901'),
+('00027','COMP1127');
 
-insert into degree_courses(degree_id, course_code) values ('00012','COMP1126');
+insert into degree_courses(degree_id, course_code) values 
+('00012','COMP1126'),
+('00013','CHEM1901');
 
 insert into department_degrees(department_id, degree_id) values ('COMP','00012');
