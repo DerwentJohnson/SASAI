@@ -125,6 +125,18 @@ insert into teaches(lecturer_id, course_code) values
 
 insert into degree_courses(degree_id, course_code) values 
 ('00012','COMP1126'),
+('00012','COMP1127'),
+('00012','COMP1161'),
+('00012','COMP1210'),
+('00012','COMP2201'),
+('00012','COMP2211'),
+('00012','COMP2140'),
+('00012','COMP2171'),
+('00012','COMP2190'),
+('00012','COMP2340'),
+('00012','COMP3101'),
+('00012','COMP3220'),
+('00012','COMP3161'),
 ('00013','CHEM1901'),
 ('00014','PHYS1422'),
 ('00015','MATH2410'),
