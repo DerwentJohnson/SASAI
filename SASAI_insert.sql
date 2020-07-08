@@ -26,7 +26,11 @@ insert into Course(course_code, course_name, number_of_credits, level) values
 ('COMP3220','Introduction to Artificial Intelligence',3,3),
 ('COMP3161','Database Management Systems',3,3),
 ('COMP3901','Group Project',3,3),
-('CHEM1901','Introductory Chemistry A',3,1);
+('BIOL1017','Cell Biology',3,1),
+('CHEM1901','Introductory Chemistry A',3,1),
+('GEOG1232','Earth Environments 2: Climate & The Biosphere',3,2),
+('MATH2410','A First Course in Linear Algebra',3,2),
+('PHYS1422','Modern Physics',3,1);
 
 insert into Department_info(Department_id, Dept_name, dept_office_num, dept_email) values 
 ('COMP','Computing','876-702-4455','computing@uwimona.edu.jm'),
@@ -38,8 +42,12 @@ insert into Department_info(Department_id, Dept_name, dept_office_num, dept_emai
 
 insert into Degree_info(degree_id, degree_name, degree_type, elective_credits,incourse_credits, foundation_credits, level_1_credits, advanced_credits, total_credits) 
 values 
-('00012','Computer Science','BSc',21,45,15,30,30,90),
-('00013'; 'Biochemistry','BSc',0,0,0,22,32,54);
+('00012','Major in Computer Science','B.Sc',21,45,15,30,30,90),
+('00013','Major in Biochemistry','B.Sc',0,0,0,22,32,54),
+('00014','Minor General Physics','B.Sc',9,18,9,18,18,73),
+('00015','Minor in Mathematics of Finance','B.Sc',9,33,9,33,33,99),
+('00016','Major in Geography','B.Sc',21,45,15,30,30,90),
+('00017','Major in Enviornmental Biology','B.Sc',21,45,15,30,30,90);
 
 insert into Lecturer(lecturer_id, lecturer_name) values
 ('00021','Dr. Gunjun Mansingh'),
@@ -85,7 +93,8 @@ insert into registered_faculty(student_id, faculty_id) values
 ('620088317','00001'),
 ('620111723','00006');
 
-insert into faculty_departments(faculty_id, department_id) values ('00001','COMP'),
+insert into faculty_departments(faculty_id, department_id) values 
+('00001','COMP'),
 ('00001','GEOG'),
 ('00001','MATH'),
 ('00001','PHYS'),
@@ -109,10 +118,23 @@ insert into department_lecturers(department_id, lecturer_id, HOD) values
 insert into teaches(lecturer_id, course_code) values 
 ('00021','COMP1126'),
 ('00025','CHEM1901'),
-('00027','COMP1127');
+('00027','COMP1127'),
+('00029','MATH2410'),
+('00030','PHYS1422'),
+('00032','BIOL1017');
 
 insert into degree_courses(degree_id, course_code) values 
 ('00012','COMP1126'),
-('00013','CHEM1901');
+('00013','CHEM1901'),
+('00014','PHYS1422'),
+('00015','MATH2410'),
+('00016','GEOG1232'),
+('00017','BIOL1017');
 
-insert into department_degrees(department_id, degree_id) values ('COMP','00012');
+insert into department_degrees(department_id, degree_id) values 
+('COMP','00012'),
+('CHEM','00013'),
+('PHYS','00014'),
+('MATH','00015'),
+('GEOG','00016'),
+('BIOL','00017');
