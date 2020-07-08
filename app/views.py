@@ -58,9 +58,7 @@ def webhook():
     return jsonify(reply)
 
 
-
-@app.route('/chat')
-def chat():
+ 
     """Render the website's chat page."""
     return render_template('chatbot.html')
 

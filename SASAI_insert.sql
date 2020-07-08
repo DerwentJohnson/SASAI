@@ -1,5 +1,7 @@
 insert into Student(student_id,student_firstname,student_lastname,`password`) values 
 ('620088317','Derwent','Johnson','password'),
+('620110310','Onesha','Sappleton','Osappleton'),
+('620107770','Dana','Campbell','Dcampbell'),
 ('620111723','Nicholas','McKenzie','something');
 
 insert into Faculty_Info (faculty_id, faculty_name,title, dean_firstname, dean_lastname) values 
@@ -39,7 +41,7 @@ insert into Department_info(Department_id, Dept_name, dept_office_num, dept_emai
 insert into Degree_info(degree_id, degree_name, degree_type, elective_credits,incourse_credits, foundation_credits, level_1_credits, advanced_credits, total_credits) 
 values 
 ('00012','Computer Science','BSc',21,45,15,30,30,90),
-('00013'; 'Biochemistry','BSc',0,0,0,22,32,54);
+('00013', 'Biochemistry','BSc',0,0,0,22,32,54);
 
 insert into Lecturer(lecturer_id, lecturer_name) values
 ('00021','Dr. Gunjun Mansingh'),
@@ -52,10 +54,10 @@ insert into Lecturer(lecturer_id, lecturer_name) values
 insert into Faculty_email(faculty_id, email) values 
 ('00001','scitech@uwimona.edu.jm'),
 ('00002','fsocsci@uwimona.edu.jm'),
-('00003','monalaw@uwimona.edu.jm');
-('00004','medsci@uwimona.edu.jm');
-('00005','engineering@uwimona.edu.jm');
-('00006','fhe@uwimona.edu.jm');
+('00003','monalaw@uwimona.edu.jm'),
+('00004','medsci@uwimona.edu.jm'),
+('00005','engineering@uwimona.edu.jm'),
+('00006','fhe@uwimona.edu.jm'),
 ('00007','sports@uwimona.edu.jm');
 
 insert into Faculty_phone_num(faculty_id, phone_number) values 
