@@ -21,8 +21,8 @@ from app.resDict import resultDict
 ###
 
 def getResponse(intent,params):
+    print(intent)
     if intent in resultDict.dispatcher:
-        print(params)
         return resultDict.dispatcher[intent](params)
     else:
         return "I'm sorry, I could not find an adequate response for your question"
@@ -51,6 +51,7 @@ def send_message():
 def webhook():
     data = request.get_json(silent=True)
     intent = data["queryResult"]["intent"]["displayName"]
+    print(intent)
     parameters = data["queryResult"]["parameters"]
     print(intent,parameters)
     response = getResponse(intent,parameters)
@@ -62,7 +63,7 @@ def webhook():
 @app.route('/chat',methods=['GET','POST'])
 def chat():
     return render_template('chatbot.html')
-    
+
 @app.route("/login-page", methods=["GET", "POST"])
 def login():
     form = LoginForm()
