@@ -61,6 +61,10 @@ body {
 }
 
 /* BODY */
+.body {
+	height: 450px;
+	overflow: auto;
+}
 
 #talkbubble {
 	width: auto;
