@@ -15,6 +15,11 @@ function submit_message(message){
 }
  var dt = new Date();
  time = document.getElementById("time").innerHTML = dt.toLocaleTimeString();
+function updateScroll() {
+     var element = document.getElementById("body");
+      element.scrollTop = element.scrollHeight;
+ }
+ updateScroll();
 
 $('#target').on('submit', function(e){
     e.preventDefault();
