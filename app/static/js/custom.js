@@ -7,12 +7,14 @@ function submit_message(message){
             <!-- <img src="../img/b3.jpg" alt="" style="height:50px;" class="mr-3"> -->
             <div class="bg-skyBlueCrayola px-2" id="talkbubble">
                 <p class="text-gray mb-1">${data.message}</p>
-                <p class="time text-right text-white font-weight-bod mb-1">time</p>
+                <p class="time text-right text-white font-weight-bod mb-1" id="time"></p>
             </div>
         </div>
         `)
     }
 }
+ var dt = new Date();
+ document.getElementById("time").innerHTML = dt.toLocaleTimeString();
 
 $('#target').on('submit', function(e){
     e.preventDefault();
@@ -27,7 +29,7 @@ $('#target').on('submit', function(e){
     <div class="user d-flex justify-content-end align-items-center mb-3">
     <div class="bg-skyBlueCrayola px-2" id="talkbubble2">
         <p class="text-white mb-1">${input_message}</p>
-        <p class="time text-right text-white font-weight-bod mb-1">2:30 pm</p>
+        <p class="time text-right text-white font-weight-bod mb-1" id="time"></p>
     </div>
     </div>
     `)
