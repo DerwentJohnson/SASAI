@@ -52,18 +52,18 @@ values
 ('00017','Major in Enviornmental Biology','B.Sc',21,45,15,30,30,90);
 
 insert into Lecturer(lecturer_id, lecturer_name) values
-('00021','Dr. Gunjun Mansingh'),
-('00022','Dr. Donovan Campbell'),
-('00023','Dr. Nagarani Ponakala'),
-('00024','Dr. Tannecia Stephenson'),
-('00025','Dr. Roy Porter'),
-('00026','Dr. Dwight Robinson'),
-('00027','Dr. Carl Beckford');
-('00028','Dr. Michael Burn');
-('00029','Dr. Samuel McDaniel');
-('00030','Phylicia Ricketts'),
-('00031','Dr. Donna Minott Kates'),
-('00032','Dr. Jane Cohen');
+('00021','Dr.','Gunjun', 'Mansingh'),
+('00022','Dr.', 'Donovan', 'Campbell'),
+('00023','Dr.', 'Nagarani', 'Ponakala'),
+('00024','Dr.', 'Tannecia', 'Stephenson'),
+('00025','Dr.', 'Roy', 'Porter'),
+('00026','Dr.', 'Dwight', 'Robinson'),
+('00027','Dr.', 'Carl', 'Beckford'),
+('00028','Dr.', 'Michael', 'Burn'),
+('00029','Dr.', 'Samuel', 'McDaniel'),
+('00030','Mrs','Phylicia', 'Ricketts'),
+('00031','Dr.', 'Donna', 'Minott-Kates'),
+('00032','Dr.', 'Jane', 'Cohen');
 
 insert into Faculty_email(faculty_id, email) values 
 ('00001','scitech@uwimona.edu.jm'),
@@ -75,11 +75,11 @@ insert into Faculty_email(faculty_id, email) values
 ('00007','sports@uwimona.edu.jm');
 
 insert into Faculty_phone_num(faculty_id, phone_number) values 
-('620088317','876-977-1785'),
+('00001','876-977-1785'),
 ('00002','876-977-3536'),
 ('00003','876-927-1855'),
 ('00004','876-927-1297'),
-('00005','(876) 927-1640'),
+('00005','876-927-1640'),
 ('00006','876-927-0221'),
 ('00007','876-702-4473');
 
@@ -104,18 +104,18 @@ insert into faculty_departments(faculty_id, department_id) values
 ('00001','BIOL');
 
 insert into department_lecturers(department_id, lecturer_id, HOD) values 
-('COMP','00021','True'),
-('GEOG','00022','True'),
-('MATH','00023','True'),
-('PHYS','00024','True'),
-('CHEM','00025','True'),
-('BIOL','00026','True'),
-('COMP','00027','False'),
-('GEOG','00028','False'),
-('MATH','00029','False'),
-('PHYS','00030','False'),
-('CHEM','00031','False'),
-('BIOL','00032','False');
+('COMP','00021',True),
+('GEOG','00022',True),
+('MATH','00023',True),
+('PHYS','00024',True),
+('CHEM','00025',True),
+('BIOL','00026',True),
+('COMP','00027',False),
+('GEOG','00028',False),
+('MATH','00029',False),
+('PHYS','00030',False),
+('CHEM','00031',False),
+('BIOL','00032',False);
 
 insert into teaches(lecturer_id, course_code) values 
 ('00021','COMP1126'),

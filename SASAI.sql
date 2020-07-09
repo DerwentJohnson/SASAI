@@ -17,7 +17,7 @@ Create table Department_info(Department_id char(4), Dept_name varchar(100), dept
 Create table Degree_info(degree_id varchar(10), degree_name varchar(100), degree_type varchar(5), elective_credits int,
  incourse_credits int, foundation_credits int, level_1_credits int, advanced_credits int, total_credits int, primary key(degree_id));
 
-Create table Lecturer(lecturer_id char(10), lecturer_name varchar(50), primary key(lecturer_id));
+Create table Lecturer(lecturer_id char(10),prfix varchar(5), lecturer_firstname varchar(30),lecturer_lastname varchar(30), primary key(lecturer_id));
 
 Create table Faculty_email(faculty_id char(5), email varchar(100), primary key(faculty_id), foreign key(faculty_id) references Faculty_Info(faculty_id));
 
