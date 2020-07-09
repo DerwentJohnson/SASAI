@@ -56,13 +56,13 @@ def webhook():
     response = getResponse(intent,parameters)
     reply = {"fulfillmentText":response}
     return jsonify(reply)
-
-
- 
     """Render the website's chat page."""
     return render_template('chatbot.html')
 
-
+@app.route('/chat',methods=['GET','POST'])
+def chat():
+    return render_template('chatbot.html')
+    
 @app.route("/login-page", methods=["GET", "POST"])
 def login():
     form = LoginForm()

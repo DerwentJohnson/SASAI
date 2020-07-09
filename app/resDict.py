@@ -26,9 +26,13 @@ class resultDict():
         return "I'm sorry, I could not access this information."
 
     def credits_for_degree(params):
+        print(params)
+        cur = db.connection.cursor()
+        credit = cur.execute("")
         return"OK"
 
     def getHOD(params):
+        print(params)
         cur = db.connection.cursor()
         query = cur.execute()
         if query > 0:
@@ -36,8 +40,9 @@ class resultDict():
             return queryDetails
 
     def getLecturer(params):
+        print(params)
         cur = db.connection.cursor()
-        query = cur.execute()
+        query = cur.execute("")
         if query > 0:
             queryDetails = cur.fetchone()
             return queryDetails
