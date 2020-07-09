@@ -48,7 +48,7 @@ class resultDict():
         return "We do not currently have information on the "+department
 
     def getLecturer(params):
-        print(params)
+        print(params['COURSECODE'])
         course_code = params['COURSECODE']
         cur = db.connection.cursor()
         query = cur.execute("select lecturer.lecturer_firstname, lecturer.lecturer_lastname,lecturer.prefix from lecturer join teaches on lecturer.lecturer_id = teaches.lecturer_id where teaches.course_code = %s",[course_code])
@@ -56,5 +56,6 @@ class resultDict():
             queryDetails = cur.fetchone()
             print(queryDetails)
             return "The Lecturer for "+course_code+" is "+queryDetails[2]+" "+queryDetails[0]+" "+queryDetails[1]
-
+        return"The information you have requested is currently not available"
+        
     dispatcher = {'DeanSearch': deansearch,'CreditsRequiredDegree':credits_for_degree,'CreditCheck':credit_check,'HOD':getHOD,'Lecturer':getLecturer}

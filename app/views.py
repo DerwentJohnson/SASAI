@@ -51,9 +51,7 @@ def send_message():
 def webhook():
     data = request.get_json(silent=True)
     intent = data["queryResult"]["intent"]["displayName"]
-    print(intent)
     parameters = data["queryResult"]["parameters"]
-    print(intent,parameters)
     response = getResponse(intent,parameters)
     reply = {"fulfillmentText":response}
     return jsonify(reply)
